@@ -1,3 +1,5 @@
+Figma Project Link: https://www.figma.com/design/2vB5kV8vaqGFFhSUTvF8vU/LoFi-Design?t=k4rVWJUbnjseRE5q-1
+
 # CSC325GroupProject
 Capstone Diet Application Group Project 
 
