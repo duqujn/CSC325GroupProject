@@ -1,4 +1,6 @@
 Figma Project Link: https://www.figma.com/design/2vB5kV8vaqGFFhSUTvF8vU/LoFi-Design?t=k4rVWJUbnjseRE5q-1
+Figma Mock Design: https://www.figma.com/design/2vB5kV8vaqGFFhSUTvF8vU/LoFi-Design---Diet-App-MockUp?node-id=0-1&t=6mCMg9A7JeH5TP94-1
+
 YouTrack: https://duqujn.youtrack.cloud/projects/0-1
 
 Capstone Team Project: Diet and Wellness Tracker Application
