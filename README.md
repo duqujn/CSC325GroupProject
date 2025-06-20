@@ -1,4 +1,5 @@
 Figma Project Link: https://www.figma.com/design/2vB5kV8vaqGFFhSUTvF8vU/LoFi-Design?t=k4rVWJUbnjseRE5q-1
+YouTrack: https://duqujn.youtrack.cloud/projects/0-1
 
 Capstone Team Project: Diet and Wellness Tracker Application
 Our diet and wellness tracker is a personalized tracking system that helps users monitor and achieve their health goals—whether it’s increasing protein intake, losing weight, tracking daily steps, or maintaining proper hydration. Designed with simplicity and adaptability in mind, this JavaFX-based application will integrate user-friendly dashboards, health analytics, and goal progress tracking backed by a Firebase cloud database. By developing a diet and wellness tracker, we aim to promote a healthy lifestyle and make dieting easier for a wide range of individuals. 
