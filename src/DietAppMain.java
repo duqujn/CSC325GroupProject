@@ -10,7 +10,11 @@ import javafx.scene.image.ImageView;
 
 public class DietAppMain {
     public void start(Stage primaryStage) {
+        SplashScreen splashScreen = new SplashScreen(primaryStage);
+        splashScreen.show();
 
+
+        //menu bar
 
     }
 }
