@@ -43,6 +43,7 @@ public class LoginScreen {
         root.setCenter(loginInfo);
 
         Scene scene = new Scene(root,700, 600);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Diet Application Login");
 

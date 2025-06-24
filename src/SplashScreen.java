@@ -29,6 +29,7 @@ public class SplashScreen {
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(event -> loadLoginScreen(stage));
         pause.play();
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
     }
 
     private void loadLoginScreen(Stage stage) {
