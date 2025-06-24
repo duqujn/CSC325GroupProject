@@ -1,14 +1,66 @@
 #label1{
-
+    -fx-font-size: 18px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
 }
 
 #label2{
-
+    -fx-font-size: 16px;
+    -fx-text-fill: #666666;
 }
 
 #loginInfo {
-
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 20px;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
 }
 #MenuBar{
+    -fx-background-color: #4CAF50;
+}
+#leftbox{
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 15px;
+}
+#rightbox{
+    -fx-background-color: #FAFAFA;
+    -fx-padding: 15px;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
 
+#nameLabel{
+    -fx-font-size: 20px;
+    -fx-text-fill: #2196F3;
+    -fx-font-weight: bold;
+}
+#goalLabel{
+    -fx-font-size: 18px;
+    -fx-text-fill: #4CAF50;
+}
+#calorieLabel{
+    -fx-font-size: 18px;
+    -fx-text-fill: #FF5722;
+}
+#profileLeftbox{
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 20px;
+}
+#successLabel{
+    -fx-background-color: #C8E6C9;
+    -fx-text-fill: #2E7D32;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-color: #81C784;
+    -fx-border-width: 2px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+#rightBoxLabel{
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
 }
