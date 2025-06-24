@@ -8,14 +8,15 @@ import javafx.animation.*;
 import javafx.scene.control.*;
 
 
-
+//Login screen for diet app
+// Ideally this will have authentication but we might not have the time to fully implement
 public class LoginScreen {
     private Stage stage;
 
+    //constructor
     public LoginScreen(Stage stage) {
         this.stage = stage;
     }
-
 
     public void show() {
         BorderPane root = new BorderPane();
@@ -31,17 +32,20 @@ public class LoginScreen {
         TextField password = new TextField();
         password.setPromptText("Enter Your Password");
 
-
+        //Login button to change screens to move to the main screen
         Button loginButton = new Button("Login");
         loginButton.setId("loginButton");
         loginButton.setPrefHeight(50);
         loginButton.setPrefWidth(150);
 
+        //set functionality for login to return to the main screen
         loginButton.setOnAction(e -> loadMainScreen());
         loginInfo.getChildren().addAll(label, username, password, loginButton);
 
+        //set up BorderPane
         root.setCenter(loginInfo);
 
+        //set up the scene and link the style.css
         Scene scene = new Scene(root,700, 600);
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         stage.setScene(scene);
@@ -49,6 +53,7 @@ public class LoginScreen {
 
     }
 
+    //private method to return to the main screen
     private void loadMainScreen() {
         DietAppMainScreen mainScreen = new DietAppMainScreen(stage);
         mainScreen.show();
