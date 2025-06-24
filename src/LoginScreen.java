@@ -18,16 +18,31 @@ public class LoginScreen {
 
 
     public void show() {
+        BorderPane root = new BorderPane();
+
+
         Label label = new Label("Login to the Diet Application");
         label.setId("label2");
+        VBox loginInfo = new VBox(20);
+        loginInfo.setId("loginInfo");
+
+        TextField username = new TextField();
+        username.setPromptText("Enter Your Username");
+        TextField password = new TextField();
+        password.setPromptText("Enter Your Password");
+
 
         Button loginButton = new Button("Login");
         loginButton.setId("loginButton");
-        loginButton.setOnAction(e -> loadMainScreen());
+        loginButton.setPrefHeight(50);
+        loginButton.setPrefWidth(150);
 
-        VBox vBox = new VBox(20, label, loginButton);
-        vBox.setId("vBox");
-        Scene scene = new Scene(vBox,400, 300);
+        loginButton.setOnAction(e -> loadMainScreen());
+        loginInfo.getChildren().addAll(label, username, password, loginButton);
+
+        root.setCenter(loginInfo);
+
+        Scene scene = new Scene(root,700, 600);
         stage.setScene(scene);
         stage.setTitle("Diet Application Login");
 
