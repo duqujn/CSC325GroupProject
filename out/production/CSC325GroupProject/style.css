@@ -3,12 +3,10 @@
     -fx-text-fill: #333333;
     -fx-font-weight: bold;
 }
-
 #label2{
     -fx-font-size: 16px;
     -fx-text-fill: #666666;
 }
-
 #loginInfo {
     -fx-background-color: #EEEEEE;
     -fx-padding: 20px;
@@ -32,7 +30,6 @@
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
 }
-
 #nameLabel{
     -fx-font-size: 20px;
     -fx-text-fill: #2196F3;

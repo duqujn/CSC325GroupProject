@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import java.awt.*;
 
+//main Diet App Page to be displayed after the splashscreen and loginscreen
 public class DietAppMainScreen {
 
     private Stage stage;
@@ -25,14 +26,19 @@ public class DietAppMainScreen {
         this.stage = stage;
     }
 
+    //public method to show the screen
     public void show() {
+        //setting up the MenuBar
         MenuBar menuBar = new MenuBar();
         menuBar.setId("menuBar");
         Menu fileMenu = new Menu("File");
         Menu editMenu = new Menu("Edit");
         MenuItem profEdit = new MenuItem("Profile");
-
         MenuItem exitMenuItem = new MenuItem("Exit");
+
+        //MenuItems: Exit with exit the program
+        //loadProfileScreen will pull up the profile screen class
+
         exitMenuItem.setOnAction(e -> System.exit(0));
         profEdit.setOnAction(e -> loadProfileScreen());
 
@@ -40,13 +46,14 @@ public class DietAppMainScreen {
         editMenu.getItems().addAll(profEdit);
         menuBar.getMenus().addAll(fileMenu, editMenu);
 
-        //left box with profile image and basic information like first name, weight goal and diet name
+        //user profile image
         Image profileImage = new Image("/images/userIcon.jpg");
         ImageView profileImageView = new ImageView(profileImage);
         profileImageView.setFitHeight(100);
         profileImageView.setFitWidth(100);
         VBox leftbox = new VBox(profileImageView);
         leftbox.setId("leftbox");
+        //Ideally these datapoints will be loaded from a database but we might not have time to fully implement
         Label nameLabel = new Label("Name: Users First Name");
         nameLabel.setId("nameLabel");
         Label goalLabel = new Label("Goal: Users Goal Weight");
@@ -55,7 +62,8 @@ public class DietAppMainScreen {
         calorieLabel.setId("calorieLabel");
         leftbox.getChildren().addAll(nameLabel, goalLabel, calorieLabel);
 
-        //Center column layout to display meals entered
+        //setting up the TableView for displaying past meals.
+        //Center column layout to display meals entered in rightbox
         TableView tableView = new TableView();
         TableColumn<MealEntry, String> dateCol = new TableColumn<>("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("dateEntered"));
@@ -70,13 +78,17 @@ public class DietAppMainScreen {
         TableColumn<MealEntry,String> fatCol = new TableColumn<>("Fat");
         fatCol.setCellValueFactory(new PropertyValueFactory<>("fat"));
 
+        //adding everything to the TableView
         tableView.getColumns().addAll(dateCol, mealCol, calCol, proteinCol, carbCol,fatCol);
 
+        //setting up the right box with editable text fields that will populate the central TableView when save is clicked
+        //ideally these will be saved in a database and will be loaded when the mainscreen is loaded
+        //but might not have time to fully implement
 
         VBox rightbox = new VBox();
         Label rightBoxLabel = new Label("Enter Meal Info");
         rightBoxLabel.setId("rightBoxLabel");
-        rightbox.setId("rightbox");  //profile screen with target weight and time frame, which can be displayed in the main screen
+        rightbox.setId("rightbox");
         TextField date  = new TextField();
         TextField meal  = new TextField();
         TextField cal  = new TextField();
@@ -90,6 +102,8 @@ public class DietAppMainScreen {
         carb.setPromptText("Enter Carbs");
         fat.setPromptText("Enter Fat");
         Button saveButton = new Button("Save");
+
+        //setting up the save button functionality
         saveButton.setOnAction(event -> {
             String dateEntered = date.getText();
             String mealEntered = meal.getText();
@@ -101,6 +115,7 @@ public class DietAppMainScreen {
             MealEntry entry = new MealEntry(dateEntered, mealEntered, caloriesEntered, proteinEntered, carbEntered, fatEntered);
             tableView.getItems().add(entry);
 
+            //clear the textboxes after save is complete
             date.clear();
             meal.clear();
             cal.clear();
@@ -109,19 +124,25 @@ public class DietAppMainScreen {
             fat.clear();
         });
 
+        //adding everything created to rightbox
         rightbox.getChildren().addAll(rightBoxLabel, date, meal, cal, protein, carb,fat, saveButton);
 
+        //setting up borderpane layout and attaching MenuBar/VBoxes/TableView
         BorderPane root = new BorderPane();
         root.setTop(menuBar);
         root.setLeft(leftbox);
         root.setCenter(tableView);
         root.setRight(rightbox);
 
+        //create the scene to display the MainAppScreen
         Scene scene = new Scene(root, 1100, 700);
+        //connecting style.css
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Diet App Main Screen");
     }
+
+    //private method to change the scene to the Profile Screen
     private void loadProfileScreen() {
         ProfileScreen profileScreen = new ProfileScreen(stage);
         profileScreen.show();
