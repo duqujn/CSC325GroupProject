@@ -16,7 +16,7 @@ import org.w3c.dom.Text;
 //main Diet App Page to be displayed after the splashscreen and loginscreen
 public class DietAppMainScreen {
 
-    private Stage stage;
+    private final Stage stage;
 
     public DietAppMainScreen(Stage stage) {
         this.stage = stage;
@@ -60,6 +60,7 @@ public class DietAppMainScreen {
 
         //setting up the TableView for displaying past meals.
         //Center column layout to display meals entered in rightbox
+        //needs to read from the Firebase db
         TableView tableView = new TableView();
         TableColumn<MealEntry, String> dateCol = new TableColumn<>("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("dateEntered"));
@@ -100,6 +101,8 @@ public class DietAppMainScreen {
         Button saveButton = new Button("Save");
 
         //setting up the save button functionality
+        //needs to be updated to write to the Firebase db
+        //and then displayed in the table view
         saveButton.setOnAction(event -> {
             String dateEntered = date.getText();
             String mealEntered = meal.getText();
@@ -120,7 +123,7 @@ public class DietAppMainScreen {
             fat.clear();
         });
 
-        //adding everything created to rightbox
+        //adding fields created to rightbox
         rightbox.getChildren().addAll(rightBoxLabel, date, meal, cal, protein, carb,fat, saveButton);
 
         //setting up borderpane layout and attaching MenuBar/VBoxes/TableView
