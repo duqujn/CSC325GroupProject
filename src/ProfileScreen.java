@@ -1,21 +1,13 @@
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.*;
 import javafx.animation.*;
-import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import java.awt.*;
 
 
 //user profile screen. Ideally preloaded with values from a database, might not have the time to full implement this tho

@@ -1,4 +1,3 @@
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,11 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.*;
-import javafx.animation.*;
-import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import java.awt.*;
+import org.w3c.dom.Text;
 
 //main Diet App Page to be displayed after the splashscreen and loginscreen
 public class DietAppMainScreen {

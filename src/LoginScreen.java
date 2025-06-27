@@ -1,10 +1,8 @@
-import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.*;
-import javafx.animation.*;
 import javafx.scene.control.*;
 
 
@@ -12,6 +10,7 @@ import javafx.scene.control.*;
 // Ideally this will have authentication but we might not have the time to fully implement
 public class LoginScreen {
     private Stage stage;
+    private FirebaseAuthService authService = new FirebaseAuthService();
 
     //constructor
     public LoginScreen(Stage stage) {
@@ -29,7 +28,7 @@ public class LoginScreen {
 
         TextField username = new TextField();
         username.setPromptText("Enter Your Username");
-        TextField password = new TextField();
+        PasswordField password = new PasswordField();
         password.setPromptText("Enter Your Password");
 
         //Login button to change screens to move to the main screen
@@ -39,7 +38,38 @@ public class LoginScreen {
         loginButton.setPrefWidth(150);
 
         //set functionality for login to return to the main screen
-        loginButton.setOnAction(e -> loadMainScreen());
+        loginButton.setOnAction(e -> {
+            String usrname = username.getText();
+            String pswd = password.getText();
+
+            username.setDisable(true);
+            password.setDisable(true);
+            loginButton.setDisable(true);
+
+            Task<String> loginTask = new Task<>() {
+                @Override
+                protected String call() throws Exception {
+                    return authService.signIn(usrname, pswd);
+                }
+            };
+
+            loginTask.setOnSucceeded(ev -> {
+                String idToken = loginTask.getValue();
+                loadMainScreen();
+            });
+            loginTask.setOnFailed(ev -> {
+                Throwable exception = loginTask.getException();
+                Alert alert = new Alert(Alert.AlertType.ERROR,
+                        "Login failed: " + exception.getMessage(),
+                        ButtonType.OK);
+            alert.showAndWait();
+
+            username.setDisable(false);
+            password.setDisable(false);
+            loginButton.setDisable(false);
+            });
+            new Thread(loginTask).start();
+        });
         loginInfo.getChildren().addAll(label, username, password, loginButton);
 
         //set up BorderPane
