@@ -1,3 +1,4 @@
+import com.google.firebase.auth.FirebaseAuth;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -13,9 +14,12 @@ import java.io.InputStream;
 
 //appLaucher class to set up a splashscreen for starting up the app
 public class appLauncher extends Application {
+    public static FirebaseAuth fauth;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         //call the splashscreen class constructor to show.
+        fauth = FirebaseAuth.getInstance();
         initializeFireBase();
         Firestore db = FirestoreClient.getFirestore();
         SplashScreen splash = new SplashScreen(primaryStage);
