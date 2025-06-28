@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 
+
 public  class registerUser {
      private TextField emailField;
      private TextField phoneField;
@@ -22,33 +23,37 @@ public  class registerUser {
         registerUser(email, phone, password, name);
     }
 
-    public boolean registerUser(String usrname, String pass, String phoneNumber, String email) {
+    public void registerUser(String email, String phoneNumber, String pass, String username) {
         if(email.isEmpty() || !email.contains("@")) {
             showAlert("Invalid email address", "Please enter a valid email address");
-            return false;
+            return;
         }
         if(pass.length() < 6 || pass.length() > 16) {
             showAlert("Invalid password", "Please enter a valid password");
-            return false;
+            return;
         }
+        if(phoneNumber.isEmpty() || !isValidPhoneNumber(phoneNumber))  {
+            showAlert("Invalid phone number", "Please enter a valid phone number");
+            return;
+        }
+
         email = email.trim();
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                 .setEmail(email)
                 .setEmailVerified(false)
                 .setPassword(pass)
                 .setPhoneNumber(phoneNumber)
-                .setDisplayName(usrname)
+                .setDisplayName(username)
                 .setDisabled(false);
 
         UserRecord userRecord;
         try {
             userRecord = appLauncher.fauth.createUser(request);
             showAlert("Success!", "User created successfully");
-            return true;
+
 
         } catch (FirebaseAuthException ex) {
             showAlert("Failed to create user", ex.getMessage());
-            return false;
         }
 
     }
@@ -57,5 +62,9 @@ public  class registerUser {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+
+    public boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber.matches("^\\+?\\d{10,15}$");
     }
 }

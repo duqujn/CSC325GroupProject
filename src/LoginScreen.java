@@ -44,11 +44,8 @@ public class LoginScreen {
         registerButton.setPrefWidth(150);
 
         registerButton.setOnAction(e -> {
-         //either create a new Boarder or StackPane and scene  set the primary stage with the new scene and call the register
-        // user class
-         //or create a new class for the registration screen and call .show() here to register
-        // then go to the main screen after registration
-
+         registerScreen registerScreen = new registerScreen(stage);
+         registerScreen.show();
         });
 
         //set functionality for login to authenticate using Firebase
@@ -61,6 +58,8 @@ public class LoginScreen {
             password.setDisable(true);
             loginButton.setDisable(true);
 
+
+            //create a Task to call the authService for login
             Task<String> loginTask = new Task<>() {
                 @Override
                 protected String call() throws Exception {
@@ -86,9 +85,10 @@ public class LoginScreen {
             password.setDisable(false);
             loginButton.setDisable(false);
             });
+            //create separate logical thread for login
             new Thread(loginTask).start();
         });
-        loginInfo.getChildren().addAll(label, username, password, loginButton);
+        loginInfo.getChildren().addAll(label, username, password, loginButton, registerButton);
 
         //set up BorderPane
         root.setCenter(loginInfo);

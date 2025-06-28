@@ -19,8 +19,8 @@ public class appLauncher extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         //call the splashscreen class constructor to show.
-        fauth = FirebaseAuth.getInstance();
         initializeFireBase();
+        fauth = FirebaseAuth.getInstance();
         Firestore db = FirestoreClient.getFirestore();
         SplashScreen splash = new SplashScreen(primaryStage);
         splash.show();
@@ -28,6 +28,7 @@ public class appLauncher extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     private void initializeFireBase() throws IOException {
         InputStream serviceAccount = getClass().getResourceAsStream("/key.json");
         FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
