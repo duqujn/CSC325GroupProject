@@ -38,7 +38,7 @@ public class DietAppMainScreen {
         exitMenuItem.setOnAction(e -> System.exit(0));
         profEdit.setOnAction(e -> loadProfileScreen());
 
-        fileMenu.getItems().addAll( exitMenuItem);
+        fileMenu.getItems().addAll(exitMenuItem);
         editMenu.getItems().addAll(profEdit);
         menuBar.getMenus().addAll(fileMenu, editMenu);
 
@@ -80,7 +80,6 @@ public class DietAppMainScreen {
 
         //setting up the right box with editable text fields that will populate the central TableView when save is clicked
         //ideally these will be saved in a database and will be loaded when the mainscreen is loaded
-        //but might not have time to fully implement
 
         VBox rightbox = new VBox();
         Label rightBoxLabel = new Label("Enter Meal Info");
@@ -104,6 +103,11 @@ public class DietAppMainScreen {
         //needs to be updated to write to the Firebase db
         //and then displayed in the table view
         saveButton.setOnAction(event -> {
+            //This needs to be redone
+            //When save is clicked, need to add these mealEntry objects to the collection in Firebase
+            // when .show() is called or the scene is set to DietAppMainScreen,
+            // need to read from Firebase and display in the TableView
+            // Basically just need to modify the professors readFirebase method
             String dateEntered = date.getText();
             String mealEntered = meal.getText();
             String caloriesEntered = cal.getText();
