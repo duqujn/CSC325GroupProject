@@ -20,10 +20,10 @@ public  class registerUser {
         String phone = phoneField.getText().trim();
         String password = passwordField.getText().trim();
         String name = usernameField.getText().trim();
-        registerUser(email, phone, password, name);
+        regUser(email, phone, password, name);
     }
 
-    public void registerUser(String email, String phoneNumber, String pass, String username) {
+    public void regUser(String email, String phoneNumber, String pass, String username) {
         if(email.isEmpty() || !email.contains("@")) {
             showAlert("Invalid email address", "Please enter a valid email address");
             return;

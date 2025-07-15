@@ -1,6 +1,3 @@
-import com.google.type.PhoneNumber;
-import com.google.type.PhoneNumberOrBuilder;
-import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -42,7 +39,7 @@ public class registerScreen {
             String usernameString = username.getText();
             String passwordString = password.getText();
 
-            registerUser.registerUser(emailString, phoneString, passwordString, usernameString);
+            registerUser.regUser(emailString, phoneString, passwordString, usernameString);
 
             DietAppMainScreen dietAppMainScreen = new DietAppMainScreen(stage);
             dietAppMainScreen.show();

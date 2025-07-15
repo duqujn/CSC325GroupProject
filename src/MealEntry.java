@@ -10,16 +10,17 @@ public class MealEntry{
     private final SimpleStringProperty protein;
     private final SimpleStringProperty carbs;
     private final SimpleStringProperty fat;
-
+    private final SimpleStringProperty id;
 
     //constructor
-    public MealEntry(String dateEntered, String mealName, String calories, String protein, String carbs, String fat){
+    public MealEntry(String id, String dateEntered, String mealName, String calories, String protein, String carbs, String fat){
         this.mealName = new SimpleStringProperty(mealName);
         this.calories = new SimpleStringProperty(calories);
         this.protein = new SimpleStringProperty(protein);
         this.dateEntered = new SimpleStringProperty(dateEntered);
         this.carbs = new SimpleStringProperty(carbs);
         this.fat = new SimpleStringProperty(fat);
+        this.id = new SimpleStringProperty(id);
     }
 
     //getmethods for retrieving data
@@ -29,4 +30,5 @@ public class MealEntry{
     public String getCarbs(){return carbs.get(); }
     public String getDateEntered(){ return dateEntered.get(); }
     public String getFat() {return fat.get();}
+    public String getID(){ return id.get(); }
 }
