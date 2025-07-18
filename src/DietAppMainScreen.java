@@ -65,7 +65,7 @@ public class DietAppMainScreen{
         profileImageView.setFitWidth(100);
         VBox leftbox = new VBox(profileImageView);
         leftbox.setId("leftbox");
-        //Ideally these datapoints will be loaded from a database but we might not have time to fully implement
+        //load profileData from the firestore
         db.loadProfileData(userName, goal);
         userName.setId("userName");
         goal.setId("goal");
@@ -74,7 +74,6 @@ public class DietAppMainScreen{
 
         //setting up the TableView for displaying past meals.
         //Center column layout to display meals entered in rightbox
-        //needs to read from the Firebase db
 
         TableColumn<MealEntry, String> dateCol = new TableColumn<>("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("dateEntered"));
@@ -96,6 +95,7 @@ public class DietAppMainScreen{
 
         //adding everything to the TableView
         tableView.getColumns().addAll(dateCol, mealCol, calCol, proteinCol, carbCol,fatCol);
+        //load data from firestore and populate the tableView
         db.loadData(tableView);
 
         //setting up the right box with editable text fields that will populate the central TableView when save is clicked
@@ -106,6 +106,7 @@ public class DietAppMainScreen{
         rightBoxLabel.setId("rightBoxLabel");
         rightbox.setId("rightbox");
 
+        //setting promptText for fields initialized
         datePicker.setPromptText("Select a Date");
         meal.setPromptText("Enter Meal");
         cal.setPromptText("Enter Calories");
@@ -115,8 +116,7 @@ public class DietAppMainScreen{
         Button saveButton = new Button("Save");
 
         //setting up the save button functionality
-        //needs to be updated to write to the Firebase db
-        //and then displayed in the table view
+        //save button loads the data from the database after it is saved to the db
         saveButton.setOnAction(event -> handleSave());
         db.loadData(tableView);
         //adding fields created to rightbox
@@ -143,6 +143,7 @@ public class DietAppMainScreen{
         profileScreen.show();
     }
 
+    //handleSave Method to save the mealEntry to the database
     private void handleSave(){
         try{
             //Validate data
@@ -163,7 +164,7 @@ public class DietAppMainScreen{
             String dateEntered = datePicked.format(DateTimeFormatter.ISO_LOCAL_DATE);
             //build mealEntry
             MealEntry entry = new MealEntry(id, dateEntered, name, caloriesStr, proteinStr, carbStr, fatsStr);
-
+            //call the method from the dbController to save the data to the database
             db.addData(entry);
 
             tableView.getItems().add(entry);

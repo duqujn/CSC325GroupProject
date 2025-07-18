@@ -11,11 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.*;
-import javafx.animation.*;
 import javafx.scene.image.Image;
-
-import javax.swing.text.Document;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,7 +130,7 @@ public class ProfileScreen {
                 Platform.runLater(() -> {
                     firstName.setText(doc.get("firstName").toString());
                     lastName.setText(doc.get("lastName").toString());
-                    Object gw = doc.get("goalWeight");
+                    Object gw = doc.get("weightGoal");
                     goalWeight.setText(gw.toString());
                 });
             }

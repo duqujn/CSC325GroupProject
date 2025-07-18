@@ -80,8 +80,8 @@ public class firebaseDBController {
                 ln = docs.getString("lastName");
                 weightGoal = String.valueOf(docs.getDouble("weightGoal"));
             }
-            names.setText(fn + " " + ln);
-            goal.setText(weightGoal);
+            names.setText("Full Name: " + fn + " " + ln);
+            goal.setText("Goal Weight: " + weightGoal);
         }catch (InterruptedException | ExecutionException e){
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to Load Profile Data\n" +e.getMessage(), ButtonType.OK);
