@@ -1,7 +1,13 @@
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.SetOptions;
+import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.cloud.FirestoreClient;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -9,13 +15,26 @@ import javafx.util.*;
 import javafx.animation.*;
 import javafx.scene.image.Image;
 
+import javax.swing.text.Document;
+import java.util.HashMap;
+import java.util.Map;
+
 
 //user profile screen. Ideally preloaded with values from a database, might not have the time to full implement this tho
 public class ProfileScreen {
     private Stage stage;
+    private final String uID;
+    private final Firestore db = FirestoreClient.getFirestore();
+    private TextField firstName = new TextField();
+    private TextField lastName = new TextField();
+    private TextField username = new TextField();
+    private TextField goalWeight = new TextField();
+    private Label successLabel;
 
-    ProfileScreen(Stage stage) {
+
+    ProfileScreen(Stage stage, String uID) {
         this.stage = stage;
+        this.uID = uID;
     }
 
     public void show(){
@@ -23,7 +42,7 @@ public class ProfileScreen {
         BorderPane root = new BorderPane();
 
         //create cheer label for save button
-        Label successLabel = new Label("Saved Successfully");
+        successLabel = new Label("Saved Successfully");
         successLabel.setId("successLabel");
         successLabel.setVisible(false);
 
@@ -39,26 +58,26 @@ public class ProfileScreen {
 
         //set up rightbox for editable text fields
         VBox rightbox = new VBox();
-        TextField firstName = new TextField();
+        loadProfile();
+        firstName = new TextField();
+        lastName = new TextField();
+        goalWeight = new TextField();
         firstName.setPromptText("First Name");
-        TextField lastName = new TextField();
         lastName.setPromptText("Last Name");
-        TextField username = new TextField();
         username.setPromptText("Username");
-        TextField goalWeight = new TextField();
         goalWeight.setPromptText("Goal Weight");
+
+
         Button saveButton = new Button("Save");
         Button backButton = new Button("Back to Main Screen");
         rightbox.getChildren().addAll(firstName, lastName, username, goalWeight, saveButton, backButton);
 
         //save button cheer functionality
-        saveButton.setOnAction(event -> {
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(e -> successLabel.setVisible(true));
-            pause.play();
-        });
+        saveButton.setOnAction(event -> saveProfile());
+
         //set up backButton Action to return to the mainscreen
-        backButton.setOnAction(e -> loadMainScreen());
+        backButton.setOnAction(e ->{new DietAppMainScreen(stage, uID).show();
+        });
         //attach vbox and label to the borderpane
         root.setLeft(leftbox);
         root.setCenter(rightbox);
@@ -71,9 +90,64 @@ public class ProfileScreen {
         stage.setTitle("Profile Screen");
     }
 
-    //private method to load the mainscreen
-    private void loadMainScreen() {
-        DietAppMainScreen mainScreen = new DietAppMainScreen(stage);
-        mainScreen.show();
+    private void saveProfile(){
+        Map<String, Object> profileUpdate = new HashMap<>();
+        profileUpdate.put("firstName", firstName.getText().trim());
+        profileUpdate.put("lastName", lastName.getText().trim());
+
+        try{
+            double goal = Double.parseDouble(goalWeight.getText().trim());
+            profileUpdate.put("weightGoal", goal);
+        }catch (NumberFormatException e){
+            showAlert(e.getMessage(), "Invalid weight goal");
+        }
+
+        Task<WriteResult> updateProfileTask = new Task<WriteResult>() {
+            @Override
+            protected WriteResult call() throws Exception {
+                Firestore db = FirestoreClient.getFirestore();
+                ApiFuture<WriteResult> future = db
+                        .collection("users")
+                        .document(uID)
+                        .set(profileUpdate, SetOptions.merge());
+                return future.get();
+            }
+        };
+        updateProfileTask.setOnSucceeded(event -> {
+            WriteResult result = updateProfileTask.getValue();
+            successLabel.setVisible(true);
+        });
+        updateProfileTask.setOnFailed(event -> {
+            Throwable exception = updateProfileTask.getException();
+            showAlert(exception.getMessage(), exception.getCause().getMessage());
+        });
+
+        new Thread(updateProfileTask).start();
+    }
+
+    private void loadProfile(){
+        ApiFuture<DocumentSnapshot> future = db.collection("users").document(uID).get();
+
+        try{
+            DocumentSnapshot doc = future.get();
+            if(doc.exists()){
+                Platform.runLater(() -> {
+                    firstName.setText(doc.get("firstName").toString());
+                    lastName.setText(doc.get("lastName").toString());
+                    Object gw = doc.get("goalWeight");
+                    goalWeight.setText(gw.toString());
+                });
+            }
+        }catch (Exception e){
+            showAlert(e.getMessage(), "Failed to Load Profile");
+        }
+    }
+
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }

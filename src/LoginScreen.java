@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -10,11 +11,18 @@ import javafx.scene.control.*;
 // Ideally this will have authentication but we might not have the time to fully implement
 public class LoginScreen {
     private final Stage stage;
-    private final FirebaseAuthService authService = new FirebaseAuthService();
+    private  FirebaseAuthService authService = new FirebaseAuthService();
 
     //constructor
     public LoginScreen(Stage stage) {
         this.stage = stage;
+        try{
+            authService = new FirebaseAuthService();
+        }catch (Exception e){
+            Platform.runLater(()->{
+                new Alert(Alert.AlertType.ERROR,"Config Error: \n" + e.getMessage(), ButtonType.OK).showAndWait();
+            });
+        }
     }
 
     public void show() {
@@ -69,8 +77,8 @@ public class LoginScreen {
 
             //on success switch screen to main screen
             loginTask.setOnSucceeded(ev -> {
-                String idToken = loginTask.getValue();
-                loadMainScreen();
+                String uID = loginTask.getValue();
+                new DietAppMainScreen(stage, uID).show();
             });
             //on failure display error mesage
             loginTask.setOnFailed(ev -> {
@@ -102,8 +110,8 @@ public class LoginScreen {
     }
 
     //private method to return to the main screen
-    private void loadMainScreen() {
-        DietAppMainScreen mainScreen = new DietAppMainScreen(stage);
-        mainScreen.show();
-    }
+//    private void loadMainScreen() {
+//        DietAppMainScreen mainScreen = new DietAppMainScreen(stage);
+//        mainScreen.show();
+//    }
 }
