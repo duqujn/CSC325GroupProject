@@ -5,7 +5,10 @@ import javafx.stage.Stage;
 import javafx.util.*;
 import javafx.animation.*;
 
-
+/**
+ * SplashScreen Class that pauses for 3 seconds after start up and then transferrers the users
+ * to the login screen
+ */
 public class SplashScreen {
     private Stage stage;
     //constructor
@@ -36,7 +39,10 @@ public class SplashScreen {
         pause.play();
     }
 
-    //private method to change the scene to the Login Screen
+    /**
+     * method to take the stage and display the login screen
+     * @param stage
+     */
     private void loadLoginScreen(Stage stage) {
         LoginScreen loginScreen = new LoginScreen(stage);
         loginScreen.show();

@@ -12,12 +12,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-//main Diet App Page to be displayed after the splashscreen and loginscreen
+/**
+ * MainScreen class to display the tableView of meals in the database as well as menuItems to quit
+ * and menuItems to update the users profile
+ */
 public class DietAppMainScreen{
     private final TextField meal  = new TextField();
     private final TextField cal  = new TextField();
@@ -50,10 +52,10 @@ public class DietAppMainScreen{
 
         //MenuItems: Exit with exit the program
         //loadProfileScreen will pull up the profile screen class
-
         exitMenuItem.setOnAction(e -> System.exit(0));
         profEdit.setOnAction(e -> loadProfileScreen());
 
+        //setting up the file menus and attaching them to the menu bar
         fileMenu.getItems().addAll(exitMenuItem);
         editMenu.getItems().addAll(profEdit);
         menuBar.getMenus().addAll(fileMenu, editMenu);
@@ -65,8 +67,10 @@ public class DietAppMainScreen{
         profileImageView.setFitWidth(100);
         VBox leftbox = new VBox(profileImageView);
         leftbox.setId("leftbox");
+
         //load profileData from the firestore
         db.loadProfileData(userName, goal);
+        //set ID's for CSS Styles
         userName.setId("userName");
         goal.setId("goal");
 
@@ -74,7 +78,6 @@ public class DietAppMainScreen{
 
         //setting up the TableView for displaying past meals.
         //Center column layout to display meals entered in rightbox
-
         TableColumn<MealEntry, String> dateCol = new TableColumn<>("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("dateEntered"));
 
@@ -116,8 +119,8 @@ public class DietAppMainScreen{
         Button saveButton = new Button("Save");
 
         //setting up the save button functionality
-        //save button loads the data from the database after it is saved to the db
         saveButton.setOnAction(event -> handleSave());
+        //save button loads the data from the database after it is saved to the db
         db.loadData(tableView);
         //adding fields created to rightbox
         rightbox.getChildren().addAll(rightBoxLabel, datePicker, meal, cal, pro, carb,fat, saveButton);
@@ -143,7 +146,10 @@ public class DietAppMainScreen{
         profileScreen.show();
     }
 
-    //handleSave Method to save the mealEntry to the database
+    /**
+     * handleSave method to save the mealEntry to the database
+     * to be called when the save button is clicked
+     */
     private void handleSave(){
         try{
             //Validate data
@@ -181,13 +187,6 @@ public class DietAppMainScreen{
             alert.setTitle("Error");
             alert.showAndWait();
         }
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.showAndWait();
     }
 }
 

@@ -1,7 +1,10 @@
 import javafx.beans.property.SimpleStringProperty;
 
 
-//separate class to facilitate MealEntry in the Main Screen
+/**
+ * public MealEntry class that is used for display in a tableView as well as
+ * values to be stored in the firestore db
+ */
 public class MealEntry{
    //private variables for entered data
     private final SimpleStringProperty dateEntered;
@@ -12,7 +15,17 @@ public class MealEntry{
     private final SimpleStringProperty fat;
     private final SimpleStringProperty id;
 
-    //constructor
+    /**
+     * MealEntry parameterized constructor
+     * creates a MealEntry to be saved in the firestore db and displayed in a listView
+     * @param id uId of specific user who entered the meal
+     * @param dateEntered valid date of entry
+     * @param mealName valid meal name
+     * @param calories valid calorie count
+     * @param protein valid protein count
+     * @param carbs valid carb count
+     * @param fat valid fat count
+     */
     public MealEntry(String id, String dateEntered, String mealName, String calories, String protein, String carbs, String fat){
         this.mealName = new SimpleStringProperty(mealName);
         this.calories = new SimpleStringProperty(calories);
@@ -23,12 +36,11 @@ public class MealEntry{
         this.id = new SimpleStringProperty(id);
     }
 
-    //getmethods for retrieving data
-    public String getMealName(){ return mealName.get(); }
-    public String getCalories(){ return calories.get(); }
-    public String getProtein(){ return protein.get(); }
-    public String getCarbs(){return carbs.get(); }
-    public String getDateEntered(){ return dateEntered.get(); }
-    public String getFat() {return fat.get();}
+    /**
+     * public method to get the ID
+     * Inititally had get methods for all fields, but all fields are saved in the database after validation
+     * easier retrieval from the database instead of local variables.
+     * @return string of the uID
+     */
     public String getID(){ return id.get(); }
 }

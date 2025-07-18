@@ -1,20 +1,21 @@
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import okhttp3.*;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-
+/**
+ * FirebaseAuthService controller to facilitate user login and authentication
+ */
 public class FirebaseAuthService {
 private final String apiKey;
 private final String restURL;
 private final String finalURL;
 
-public FirebaseAuthService(){
+    /**
+     * constructor for FirebaseAuthService
+     */
+    public FirebaseAuthService(){
     InputStream in = getClass()
             .getResourceAsStream("/firebaseConfig.json");
 
@@ -22,20 +23,30 @@ public FirebaseAuthService(){
         throw new IllegalStateException("Could not find firebase config file");
     }
 
+    //get resources from file and create the finalURL
     JSONObject config = new JSONObject(new JSONTokener(in));
     apiKey = config.getString("apiKey");
     restURL = config.getString("authURL");
     finalURL = restURL + apiKey;
 }
 
-
+    /**
+     * Sign in method that takes in user email and password and checks it against the firestore
+     *
+     * @param email valid user email
+     * @param pass valid user password
+     * @return returns the uID of the sucessfully authenticated user to load specific user data
+     * @throws IOException expection thrown if authentication fails
+     */
     public String signIn(String email, String pass) throws IOException {
+        //create the HTTP client for authentication
         OkHttpClient client = new OkHttpClient();
+        //create the json payload of email/password
         JSONObject payload = new JSONObject()
                 .put("email", email)
                 .put("password", pass)
                 .put("returnSecureToken", true);
-
+        //build auth request
         RequestBody body = RequestBody.create(
                 MediaType.parse("application/json: charset=utf-8"),
                 payload.toString());
@@ -57,14 +68,8 @@ public FirebaseAuthService(){
             if(!o.has("localId")){
                 throw new IOException("signIn() is missing localId field");
             }
-            //String uID = o.getString("localID");
+            //return local uID for specific user data retrieval
             return o.getString("localId");
         }
-    }
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.showAndWait();
     }
 }

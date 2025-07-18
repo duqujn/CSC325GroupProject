@@ -6,9 +6,10 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
-
-//Login screen for diet app
-// Ideally this will have authentication but we might not have the time to fully implement
+/**
+ * LoginScreen for users to enter their username/pass to gain access to the main screen
+ * new users can also register an account if they dont already have one
+ */
 public class LoginScreen {
     private final Stage stage;
     private  FirebaseAuthService authService = new FirebaseAuthService();
@@ -25,6 +26,9 @@ public class LoginScreen {
         }
     }
 
+    /**
+     * public method to sow the loginScreen
+     */
     public void show() {
         BorderPane root = new BorderPane();
 
@@ -51,6 +55,7 @@ public class LoginScreen {
         registerButton.setPrefHeight(50);
         registerButton.setPrefWidth(150);
 
+        //set functionality for a new user trying to register a new account
         registerButton.setOnAction(e -> {
          registerScreen registerScreen = new registerScreen(stage);
          registerScreen.show();
@@ -80,7 +85,7 @@ public class LoginScreen {
                 String uID = loginTask.getValue();
                 new DietAppMainScreen(stage, uID).show();
             });
-            //on failure display error mesage
+            //on failure display error message
             loginTask.setOnFailed(ev -> {
                 Throwable exception = loginTask.getException();
                 Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -108,10 +113,4 @@ public class LoginScreen {
         stage.setTitle("Diet Application Login");
 
     }
-
-    //private method to return to the main screen
-//    private void loadMainScreen() {
-//        DietAppMainScreen mainScreen = new DietAppMainScreen(stage);
-//        mainScreen.show();
-//    }
 }

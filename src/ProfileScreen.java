@@ -16,7 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-//user profile screen. Ideally preloaded with values from a database, might not have the time to full implement this tho
+/**
+ * Profile screen that displays current user values and allows user to update these values
+ */
 public class ProfileScreen {
     private Stage stage;
     private final String uID;
@@ -27,12 +29,20 @@ public class ProfileScreen {
     private TextField goalWeight = new TextField();
     private Label successLabel;
 
-
+    /**
+     * contructor that takes in a stage to be displayed on
+     * and uID for specific user data retrieval
+     * @param stage stage to be passed upon creation
+     * @param uID uID to be passed for specific user data retrieval
+     */
     ProfileScreen(Stage stage, String uID) {
         this.stage = stage;
         this.uID = uID;
     }
 
+    /**
+     * public method to show the profile screen
+     */
     public void show(){
         //set up borderpane
         BorderPane root = new BorderPane();
@@ -63,7 +73,7 @@ public class ProfileScreen {
         username.setPromptText("Username");
         goalWeight.setPromptText("Goal Weight");
 
-
+        //set up the buttons
         Button saveButton = new Button("Save");
         Button backButton = new Button("Back to Main Screen");
         rightbox.getChildren().addAll(firstName, lastName, username, goalWeight, saveButton, backButton);
@@ -86,6 +96,10 @@ public class ProfileScreen {
         stage.setTitle("Profile Screen");
     }
 
+    /**
+     * private method that is called when the save button is pressed
+     * This method saves the user edits to the database and then displays a success or failure message
+     */
     private void saveProfile(){
         Map<String, Object> profileUpdate = new HashMap<>();
         profileUpdate.put("firstName", firstName.getText().trim());
@@ -98,6 +112,9 @@ public class ProfileScreen {
             showAlert(e.getMessage(), "Invalid weight goal");
         }
 
+        //create a task to be run as a separate thread for performance
+        //this overrides the writeResult in order to get the specific instance of the db, as well ass
+        //access to the correct collection in the firestore db
         Task<WriteResult> updateProfileTask = new Task<WriteResult>() {
             @Override
             protected WriteResult call() throws Exception {
@@ -109,10 +126,11 @@ public class ProfileScreen {
                 return future.get();
             }
         };
+        //upon success display the success label
         updateProfileTask.setOnSucceeded(event -> {
-            WriteResult result = updateProfileTask.getValue();
             successLabel.setVisible(true);
         });
+        //upon failure throw an exception
         updateProfileTask.setOnFailed(event -> {
             Throwable exception = updateProfileTask.getException();
             showAlert(exception.getMessage(), exception.getCause().getMessage());
@@ -121,6 +139,9 @@ public class ProfileScreen {
         new Thread(updateProfileTask).start();
     }
 
+    /**
+     * private method to be called to load the specific user data already in the database
+     */
     private void loadProfile(){
         ApiFuture<DocumentSnapshot> future = db.collection("users").document(uID).get();
 
@@ -139,7 +160,11 @@ public class ProfileScreen {
         }
     }
 
-
+    /**
+     * public method for other methods to call when an error is thrown
+     * @param title pass in title of the alert pane
+     * @param message the error log that was thrown
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         alert.setTitle(title);
