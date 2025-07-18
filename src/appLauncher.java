@@ -31,7 +31,9 @@ public class appLauncher extends Application {
 
     private void initializeFireBase() throws IOException {
         InputStream serviceAccount = getClass().getResourceAsStream("/key.json");
-        FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .build();
         FirebaseApp.initializeApp(options);
         System.out.println("Firebase initialized");
 

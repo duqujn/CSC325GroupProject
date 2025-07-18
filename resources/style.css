@@ -30,12 +30,12 @@
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
 }
-#nameLabel{
+#userName{
     -fx-font-size: 20px;
     -fx-text-fill: #2196F3;
     -fx-font-weight: bold;
 }
-#goalLabel{
+#goal{
     -fx-font-size: 18px;
     -fx-text-fill: #4CAF50;
 }

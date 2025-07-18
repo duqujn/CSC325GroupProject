@@ -1,2 +1,4 @@
 resources/key.json
 target/classes/key.json
+resources/firebaseConfig.json
+target/classes/firebaseConfig.json

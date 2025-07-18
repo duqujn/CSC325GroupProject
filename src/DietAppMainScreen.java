@@ -1,3 +1,4 @@
+import com.google.firebase.auth.FirebaseAuth;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,18 +19,23 @@ import java.util.UUID;
 
 //main Diet App Page to be displayed after the splashscreen and loginscreen
 public class DietAppMainScreen{
-    private TextField meal  = new TextField();
-    private TextField cal  = new TextField();
-    private TextField pro = new TextField();
-    private TextField carb = new TextField();
-    private TextField fat = new TextField();
-    private firebaseDBController db = new firebaseDBController();
-    private DatePicker datePicker = new DatePicker();
+    private final TextField meal  = new TextField();
+    private final TextField cal  = new TextField();
+    private final TextField pro = new TextField();
+    private final TextField carb = new TextField();
+    private final TextField fat = new TextField();
+    private final Label userName = new Label();
+    private final Label goal = new Label();
+    private final firebaseDBController db;
+    private final String uID;
+    private final DatePicker datePicker = new DatePicker();
     private final Stage stage;
     private final TableView<MealEntry> tableView = new TableView<>();
 
-    public DietAppMainScreen(Stage stage) {
+    public DietAppMainScreen(Stage stage, String uID) {
         this.stage = stage;
+        this.uID = uID;
+        this.db = new firebaseDBController(uID);
     }
 
     //public method to show the screen
@@ -60,16 +66,11 @@ public class DietAppMainScreen{
         VBox leftbox = new VBox(profileImageView);
         leftbox.setId("leftbox");
         //Ideally these datapoints will be loaded from a database but we might not have time to fully implement
-        Label nameLabel = new Label("Name: Users First Name");
-        nameLabel.setId("nameLabel");
+        db.loadProfileData(userName, goal);
+        userName.setId("userName");
+        goal.setId("goal");
 
-        Label goalLabel = new Label("Goal: Users Goal Weight");
-        goalLabel.setId("goalLabel");
-
-        Label calorieLabel = new Label("Total Calories Available Today");
-        calorieLabel.setId("calorieLabel");
-
-        leftbox.getChildren().addAll(nameLabel, goalLabel, calorieLabel);
+        leftbox.getChildren().addAll(userName, goal);
 
         //setting up the TableView for displaying past meals.
         //Center column layout to display meals entered in rightbox
@@ -138,7 +139,7 @@ public class DietAppMainScreen{
 
     //private method to change the scene to the Profile Screen
     private void loadProfileScreen() {
-        ProfileScreen profileScreen = new ProfileScreen(stage);
+        ProfileScreen profileScreen = new ProfileScreen(stage, uID);
         profileScreen.show();
     }
 
