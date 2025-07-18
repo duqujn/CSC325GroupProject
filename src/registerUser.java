@@ -4,28 +4,31 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
-import java.beans.IntrospectionException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
-
+/**
+ * Class with methods to register a new user
+ */
 public class registerUser {
-     private TextField emailField;
-     private TextField phoneField;
-     private TextField usernameField;
-     private TextField firstNameField;
-     private TextField lastNameField;
-     private TextField weightGoalField;
-     private PasswordField passwordField;
-
+    /**
+     * public class that calls the private writeUserProfile method
+     * this class is accessed as a controller to write new users to the database
+     * @param email valid user email
+     * @param phoneNumber valid user phone number
+     * @param pass valid user password
+     * @param username valid username
+     * @param firstName valid first name
+     * @param lastName valid last name
+     * @param weightGoal valid weight goal
+     * @return the uID in order to keep users data siloed
+     * @throws FirebaseAuthException error of db is unreachable
+     */
     public String regUser(String email, String phoneNumber, String pass, String username,
                         String firstName, String lastName, Double weightGoal) throws FirebaseAuthException {
+        //build user record from inputs
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                 .setEmail(email)
                 .setEmailVerified(false)
@@ -40,7 +43,15 @@ public class registerUser {
         return userRecord.getUid();
     }
 
+    /**
+     * private method to called within this class to write the new user to the database
+     * @param uID user ID passed in
+     * @param firstName valid first name
+     * @param lastName valid last name
+     * @param weightGoal valid goal weight
+     */
     private void writeUserProfile(String uID, String firstName, String lastName, double weightGoal){
+        //get the firestore db instance and create a map for addition to the database
         Firestore db = FirestoreClient.getFirestore();
         Map<String, Object> userProfile = new HashMap<>();
         userProfile.put("firstName", firstName);
@@ -58,7 +69,11 @@ public class registerUser {
         }
     }
 
-
+    /**
+     * public method for other methods to call when an error is thrown
+     * @param title pass in title of the alert pane
+     * @param message the error log that was thrown
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         alert.setTitle(title);

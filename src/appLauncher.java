@@ -4,31 +4,40 @@ import javafx.stage.Stage;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.cloud.firestore.Firestore;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-//appLaucher class to set up a splashscreen for starting up the app
+/**
+ * appLauncher initalizes the firebaseAuth and starts the splash screen
+ */
 public class appLauncher extends Application {
     public static FirebaseAuth fauth;
 
+    /**
+     *
+     * @param primaryStage stage to display the splashscreen
+     * @throws IOException exception thrown if any errors occur during start();
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //call the splashscreen class constructor to show.
+
         initializeFireBase();
         fauth = FirebaseAuth.getInstance();
-        Firestore db = FirestoreClient.getFirestore();
         SplashScreen splash = new SplashScreen(primaryStage);
         splash.show();
     }
+
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * initizalise the firebase instance from the key.json file that includes all service account related
+     * points for authentication
+     * @throws IOException
+     */
     private void initializeFireBase() throws IOException {
         InputStream serviceAccount = getClass().getResourceAsStream("/key.json");
         FirebaseOptions options = new FirebaseOptions.Builder()

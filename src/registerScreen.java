@@ -5,7 +5,10 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
-
+/**
+ * RegisterScreen to be accessed from the login Screen for new users to register a new account
+ * in the firebase auth
+ */
 
 public class registerScreen {
     private final Stage stage;
@@ -16,6 +19,9 @@ public class registerScreen {
         this.stage = stage;
     }
 
+    /**
+     * public method to show the registerScreen
+     */
     public void show() {
         BorderPane root = new BorderPane();
         Label title = new Label("Registration Screen");
@@ -37,10 +43,12 @@ public class registerScreen {
         email.setPromptText("Enter Email");
         TextField phone = new TextField();
         phone.setPromptText("Enter Phone Number");
-        phone.setText("+1 ");
+        //+1 is preset to help users pass validation
+        phone.setText("+1");
 
         Button submit = new Button("Submit");
         submit.setId("submitButton");
+        //set functionality to validate and register new user upon clicking submit
         submit.setOnAction(e -> {
             String emailString = email.getText().trim();
             String phoneString = phone.getText().trim();
@@ -89,6 +97,11 @@ public class registerScreen {
 
     }
 
+    /**
+     * public method for other methods to call when an error is thrown
+     * @param title pass in title of the alert pane
+     * @param message the error log that was thrown
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         alert.setTitle(title);
@@ -96,6 +109,11 @@ public class registerScreen {
         alert.showAndWait();
     }
 
+    /**
+     * public method to be called from validation to validate and valid phone number
+     * @param phoneNumber number input from the user
+     * @return return true/false if phone number is valid
+     */
     public boolean isValidPhoneNumber(String phoneNumber) {
         return phoneNumber.matches("^\\+?\\d{10,15}$");
     }
