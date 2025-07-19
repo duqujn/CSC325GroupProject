@@ -33,13 +33,21 @@ public class DietAppMainScreen{
     private final Stage stage;
     private final TableView<MealEntry> tableView = new TableView<>();
 
+    /**
+     * DietAppMainScreen constructor that takes in a Stage and uID
+     * uID is passed in from login so user data can be loaded from the appropriate collection
+     * @param stage - Stage the MainScreen will be displayed on
+     * @param uID - unique user ID for read/write purposes
+     */
     public DietAppMainScreen(Stage stage, String uID) {
         this.stage = stage;
         this.uID = uID;
         this.db = new firebaseDBController(uID);
     }
 
-    //public method to show the screen
+    /**
+     * public show() method to display the main screen
+     */
     public void show() {
         //setting up the MenuBar
         MenuBar menuBar = new MenuBar();
@@ -139,7 +147,9 @@ public class DietAppMainScreen{
         stage.setTitle("Diet App Main Screen");
     }
 
-    //private method to change the scene to the Profile Screen
+    /**
+     * private method to load the profile screen
+     */
     private void loadProfileScreen() {
         ProfileScreen profileScreen = new ProfileScreen(stage, uID);
         profileScreen.show();

@@ -27,6 +27,10 @@ public class appLauncher extends Application {
         splash.show();
     }
 
+    /**
+     * main method to start the app
+     * @param args - arguments to start the app
+     */
     public static void main(String[] args) {
         launch(args);
     }

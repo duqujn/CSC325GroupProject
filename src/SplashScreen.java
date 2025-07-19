@@ -12,11 +12,18 @@ import javafx.animation.*;
 public class SplashScreen {
     private Stage stage;
     //constructor
+
+    /**
+     * Splash screen constructor that takes in a new stage to be displayed on
+     * @param stage - stage to for splash screen to be displayed one
+     */
     public SplashScreen(Stage stage) {
         this.stage = stage;
     }
 
-    //public method to show the screen
+    /**
+     * public show() method to show the splash screen
+     */
     public void show() {
         //Splashscreen message
         Label label = new Label("Welcome to the Diet and Wellness App");
