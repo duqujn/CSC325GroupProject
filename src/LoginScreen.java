@@ -14,7 +14,10 @@ public class LoginScreen {
     private final Stage stage;
     private  FirebaseAuthService authService = new FirebaseAuthService();
 
-    //constructor
+    /**
+     * constructor that takes in a Stage to display the login screen
+     * @param stage - Stage that the login screen will be displayed on
+     */
     public LoginScreen(Stage stage) {
         this.stage = stage;
         try{
