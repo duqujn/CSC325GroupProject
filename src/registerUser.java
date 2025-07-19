@@ -19,14 +19,13 @@ public class registerUser {
      * @param email valid user email
      * @param phoneNumber valid user phone number
      * @param pass valid user password
-     * @param username valid username
      * @param firstName valid first name
      * @param lastName valid last name
      * @param weightGoal valid weight goal
      * @return the uID in order to keep users data siloed
      * @throws FirebaseAuthException error of db is unreachable
      */
-    public String regUser(String email, String phoneNumber, String pass, String username,
+    public String regUser(String email, String phoneNumber, String pass,
                         String firstName, String lastName, Double weightGoal) throws FirebaseAuthException {
         //build user record from inputs
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()

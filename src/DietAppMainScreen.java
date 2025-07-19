@@ -1,4 +1,3 @@
-import com.google.firebase.auth.FirebaseAuth;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
