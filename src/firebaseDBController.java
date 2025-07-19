@@ -14,7 +14,6 @@ import java.util.concurrent.ExecutionException;
  * the constructor takes in the uID to find specific user data
  */
 public class firebaseDBController {
-    public TableView<MealEntry> tableView;
     private final String uId;
     private static final String USERS = "users";
     private static final String col = "mealEntries";
@@ -43,9 +42,9 @@ public class firebaseDBController {
     /**
      * public method to populate the passed in tableView object
      * This reads from the database and sets the values to the tableView
-     * @param tb
+     * @param tblViw passed in tableView to be populated
      */
-    public void loadData(TableView<MealEntry> tb){
+    public void loadData(TableView<MealEntry> tblViw){
         Firestore db = FirestoreClient.getFirestore();
         ApiFuture<QuerySnapshot> future = db.collection(USERS)
                 .document(uId)
@@ -68,7 +67,7 @@ public class firebaseDBController {
                         doc.getString("fat")
                 ));
             }
-            tb.getItems().setAll(mealEntries);
+            tblViw.getItems().setAll(mealEntries);
 
         }catch (InterruptedException | ExecutionException e){
             e.printStackTrace();

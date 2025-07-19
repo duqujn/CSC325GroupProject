@@ -37,10 +37,14 @@ public class MealEntry{
     }
 
     /**
-     * public method to get the ID
-     * Inititally had get methods for all fields, but all fields are saved in the database after validation
-     * easier retrieval from the database instead of local variables.
+     * public getter methods
      * @return string of the uID
      */
     public String getID(){ return id.get(); }
+    public String getMealName(){ return mealName.get(); }
+    public String getCalories(){ return calories.get(); }
+    public String getProtein(){ return protein.get(); }
+    public String getCarbs(){return carbs.get(); }
+    public String getDateEntered(){ return dateEntered.get(); }
+    public String getFat() {return fat.get();}
 }

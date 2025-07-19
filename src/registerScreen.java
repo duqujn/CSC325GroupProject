@@ -35,8 +35,6 @@ public class registerScreen {
         lastName.setPromptText("Last Name");
         TextField weightGoalField = new TextField();
         weightGoalField.setPromptText("Weight Goal");
-        TextField username = new TextField();
-        username.setPromptText("Enter Username");
         TextField password = new PasswordField();
         password.setPromptText("Enter Password");
         TextField email = new TextField();
@@ -52,7 +50,6 @@ public class registerScreen {
         submit.setOnAction(e -> {
             String emailString = email.getText().trim();
             String phoneString = phone.getText().trim();
-            String usernameString = username.getText().trim();
             String passwordString = password.getText().trim();
             String firstNameString = firstName.getText().trim();
             String lastNameString = lastName.getText().trim();
@@ -78,7 +75,7 @@ public class registerScreen {
                 return;
             }
             try {
-                String uID = regController.regUser(emailString, phoneString, passwordString, usernameString, firstNameString, lastNameString, weightGoal);
+                String uID = regController.regUser(emailString, phoneString, passwordString, firstNameString, lastNameString, weightGoal);
                 new DietAppMainScreen(stage, uID).show();
 
             }catch (FirebaseAuthException ex){
@@ -87,7 +84,7 @@ public class registerScreen {
 
         });
 
-        regInfo.getChildren().addAll(username, password, email, phone, firstName, lastName, weightGoalField, title,submit);
+        regInfo.getChildren().addAll(email, password, phone, firstName, lastName, weightGoalField, title, submit);
         root.setCenter(regInfo);
         root.setTop(title);
         Scene scene = new Scene(root, 700, 600);
