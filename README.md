@@ -54,7 +54,7 @@ Developed in Java with JavaFX for GUI.
 Firebase SDK for Java will be used for cloud-based authentication and data storage.
 
 
-Project managed in NetBeans IDE with version control through GitHub.
+Project managed in intelliJIDEA IDE with version control through GitHub.
 
 
 YouTrack will be used for task management, tracking bugs, and sprint planning.
